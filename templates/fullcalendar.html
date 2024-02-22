@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% set title = 'Booking System' %}
+{% set subtitle = 'Double click on the calendar to create a new booking' %}
+
+{% block stylesheets %}
+<link href="{{ url_for('static', filename='css/fullcalendar/fullcalendar.min.css') }}" rel="stylesheet">
+<!-- <link href="{{ url_for('static', filename='css/fullcalendar/fullcalendar.print.min.css') }}" rel="stylesheet" media="print"> -->
+<link href="{{ url_for('static', filename='css/fullcalendar/scheduler.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/daterangepicker.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div id='calendar' data-location='{{ user_location }}' data-group='{{ g.user.get_group() }}'></div>
+
+<div id="bookingForm" class="d-none">
+	<form>
+		<div class="form-group">
+			<label for="first_name">Booking Name</label>
+			<div class="row">
+				<div class="col">
+					<input type="text" id="first_name" name="first_name" class="form-control" placeholder="First name" required>
+				</div>
+				<div class="col">
+					<input type="text" name="last_name" class="form-control" placeholder="Last name" required>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="location_id">Location</label>
+			<select id="location_id" name="location_id" class="form-control" required>
+				{% for location in locations %}
+					{% if location['name'] == user_location %}
+						<option value="{{ location['location_id'] }}" selected>{{ location['name'] }}</option>
+					{% else %}
+						<option value="{{ location['location_id'] }}">{{ location['name'] }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="phone_number">Phone Number</label>
+			<input type="text" id="phone_number" name="phone_number" class="form-control" placeholder="(02) 5550 2650">
+		</div>
+		<div class="form-group">
+			<label for="wizard_id">Wizard Booking Id</label>
+			<input type="text" id="wizard_id" name="wizard_id" class="form-control" placeholder="1234-5678-AU-6">
+		</div>
+		<div class="form-group form-row">
+			<div class="col">
+				<label for="exampleFormCvehicle_groupntrolSelect1">Vehicle Group</label>
+				<select class="form-control" id="vehicle_group" name="vehicle_group" required>
+					<option value="" selected disabled>None</option>
+				</select>
+			</div>
+			<div class="col d-none">
+				<label for="vehicle">Vehicle</label>
+				<select class="form-control" id="vehicle" name="vehicle">
+					<option value="" selected disabled>None</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="date_range">Booking</label>
+			<input type="text" id="date_range" name="date_range" class="form-control" placeholder="Date range" required>
+		</div>
+		<div class="form-group">
+			<label for="notes">Notes</label>
+			<textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+		</div>
+	</form>
+</div>
+
+<div id="bookingView" class="d-none">
+	<input type="hidden" name="id">
+	<div class="row">
+		<div class="col-sm-4"><strong>Booking Name</strong></div>
+		<div class="col-sm-8"><p class="name"></p></div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4"><strong>Wizard ID</strong></div>
+		<div class="col-sm-8"><p class="wizard"></p></div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4"><strong>Vehicle/Group</strong></div>
+		<div class="col-sm-8"><p class="group"></p></div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4"><strong>Date & Time</strong></div>
+		<div class="col-sm-8"><p class="date"></p></div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4"><strong>Notes</strong></div>
+		<div class="col-sm-8"><p class="notes"></p></div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4"><strong>Creator</strong></div>
+		<div class="col-sm-8"><p class="creator"></p></div>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/fullcalendar/fullcalendar.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/fullcalendar/scheduler.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/scheduling.js') }}"></script>
+<script src="{{ url_for('static', filename='js/daterangepicker.js') }}"></script>
+{% endblock %}

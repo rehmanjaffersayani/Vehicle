@@ -1,0 +1,5 @@
+<select class="form-control" {% if id is defined %} id="{{ id }}" {% endif %} {% if classes is defined %} class="{{ classes }}" {% endif %} name="{{ name }}" {% if required is defined and required %} required {% endif %}>
+	{% for option in options %}
+	<option value="{{ option.value }}"{% if option.data is defined %}{% for d, v in option.data.items() %} data-{{ d }}="{{ v }}" {% endfor %}{% endif %}{% if option.selected is defined and option.selected %} selected {% endif %}{% if option.disabled is defined and option.disabled %} disabled {% endif %}>{{ option.label }}</option>
+	{% endfor %}
+</select>

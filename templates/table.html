@@ -1,0 +1,16 @@
+<table class="dt table table-striped table-bordered dt-responsive nowrap" {% if table.id is defined %}id="{{ table.id }}"{% endif %} style="width:100%">
+	<thead>
+	{% for header in table.headers %}
+		<th {% if header.priority is defined %}data-priority="{{ header.priority }}"{% endif %}>{{ header.text }}</th>
+	{% endfor %}
+	</thead>
+	<tbody>
+	{% for row in table.rows %}
+		<tr {% if row.class is defined %}class="{% for class in row.class %} {{ class }}{% endfor %}"{% endif %}{% for d in row.data %}data-{{ d.name }}="{{ d.value }}" {% endfor %}>
+		{% for cell in row.cells %}
+			<td>{{ cell.text }}</td>
+		{% endfor %}
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
